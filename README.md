@@ -1,4 +1,4 @@
-# 📦 Bellande Particles
+# 📦 Bellande Particle
 
 ## 🧙 Organization Website
 - [![Organization Website](https://img.shields.io/badge/Explore%20Our-Website-0099cc?style=for-the-badge)](https://robotics-sensors.github.io)
@@ -28,14 +28,16 @@
 
 url: https://bellande-robotics-sensors-research-innovation-center.org
 
-endpoint_path:
-    bellande_particle: /api/Bellande_Particle/bellande_particle
+endpoint_paths:
+    move: /api/Bellande_Particle/move
+    read_markers: /api/Bellande_Particle/read_markers
+    create_random: /api/Bellande_Particle/create_random
 
 Bellande_Framework_Access_Key: bellande_web_api_opensource
 ```
 
 # API HTTP Usability (JSON FORMAT)
-```
+```json
 {
   "license": [
     "Copyright (C) 2024 Bellande Robotics Sensors Research Innovation Center, Ronaldson Bellande",
@@ -54,28 +56,64 @@ Bellande_Framework_Access_Key: bellande_web_api_opensource
     "GNU General Public License v3.0 or later"
   ],
   "url": "https://bellande-robotics-sensors-research-innovation-center.org",
-  "endpoint_path": {
-    "bellande_particle": "/api/Bellande_Particle/bellande_particle"
+  "endpoint_paths": {
+    "move": "/api/Bellande_Particle/move",
+    "read_markers": "/api/Bellande_Particle/read_markers",
+    "create_random": "/api/Bellande_Particle/create_random"
   },
   "Bellande_Framework_Access_Key": "bellande_web_api_opensource"
 }
 ```
 
-# API Payload Example
-```
+# API Payload Examples
+
+## Move Particle
+```json
 {
-    "particle": [0, 0, 0, 1.0],
-    "movement": {
-        "rotation1": 45.0,
-        "translation": 1.0,
-        "rotation2": -45.0
+    "particle": {
+        "x": 0,
+        "y": 0,
+        "heading": 0,
+        "weight": 1.0
+    },
+    "rotation1": 45.0,
+    "translation": 1.0,
+    "rotation2": -45.0,
+    "auth": {
+        "authorization_key": "bellande_web_api_opensource"
+    }
+}
+```
+
+## Read Markers
+```json
+{
+    "particle": {
+        "x": 0,
+        "y": 0,
+        "heading": 0,
+        "weight": 1.0
     },
     "world": {
         "width": 10.0,
         "height": 10.0,
         "markers": [[1.0, 1.0]]
     },
+    "auth": {
+        "authorization_key": "bellande_web_api_opensource"
+    }
+}
+```
+
+## Create Random
+```json
+{
     "count": 10,
+    "world": {
+        "width": 10.0,
+        "height": 10.0,
+        "markers": [[1.0, 1.0]]
+    },
     "auth": {
         "authorization_key": "bellande_web_api_opensource"
     }
@@ -83,34 +121,76 @@ Bellande_Framework_Access_Key: bellande_web_api_opensource
 ```
 
 # 🧙 Website Bellande API Testing 
-- [![Website API Testing](https://img.shields.io/badge/Bellande%20API-Testing-0099cc?style=for-the-badge)](https://bellande-robotics-sensors-research-innovation-center.org/api/bellande_particles_experiment)
+- [![Website API Testing](https://img.shields.io/badge/Bellande%20API-Testing-0099cc?style=for-the-badge)](https://bellande-robotics-sensors-research-innovation-center.org/api/bellande_particle_experiment)
   
-# Quick Bellande API Testing
-```
+# Quick Bellande API Testing Examples
+
+## Move Particle
+```bash
 curl -X 'POST' \
-  'https://bellande-robotics-sensors-research-innovation-center.org/api/Bellande_Particle/bellande_particle' \
+  'https://bellande-robotics-sensors-research-innovation-center.org/api/Bellande_Particle/move' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-    "particle": [0, 0, 0, 1.0],
-    "movement": {
-        "rotation1": 45.0,
-        "translation": 1.0,
-        "rotation2": -45.0
+    "particle": {
+        "x": 0,
+        "y": 0,
+        "heading": 0,
+        "weight": 1.0
     },
-    "world": {
-        "width": 10.0,
-        "height": 10.0,
-        "markers": [[1.0, 1.0]]
-    },
-    "count": 10,
+    "rotation1": 45.0,
+    "translation": 1.0,
+    "rotation2": -45.0,
     "auth": {
         "authorization_key": "bellande_web_api_opensource"
     }
   }'
 ```
 
-# Bellande Particles Usage
+## Read Markers
+```bash
+curl -X 'POST' \
+  'https://bellande-robotics-sensors-research-innovation-center.org/api/Bellande_Particle/read_markers' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "particle": {
+        "x": 0,
+        "y": 0,
+        "heading": 0,
+        "weight": 1.0
+    },
+    "world": {
+        "width": 10.0,
+        "height": 10.0,
+        "markers": [[1.0, 1.0]]
+    },
+    "auth": {
+        "authorization_key": "bellande_web_api_opensource"
+    }
+  }'
+```
+
+## Create Random
+```bash
+curl -X 'POST' \
+  'https://bellande-robotics-sensors-research-innovation-center.org/api/Bellande_Particle/create_random' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "count": 10,
+    "world": {
+        "width": 10.0,
+        "height": 10.0,
+        "markers": [[1.0, 1.0]]
+    },
+    "auth": {
+        "authorization_key": "bellande_web_api_opensource"
+    }
+  }'
+```
+
+# Bellande Particle Usage
 
 ## Website Crates
 - https://crates.io/crates/bellande_particle
@@ -124,16 +204,28 @@ curl -X 'POST' \
 ### Installation
 - `$ pip install bellande_particle`
 
-### Usage 
-```
-bellande_particle \
-  --particle "[0, 0, 0, 1.0]" \
-  --movement '{"rotation1": 45.0, "translation": 1.0, "rotation2": -45.0}' \
-  --world '{"width": 10.0, "height": 10.0, "markers": [[1.0, 1.0]]}' \
-  --count 10
+### Command Line Usage Examples
+
+```bash
+# Move particle
+bellande_particle move \
+  --particle-state "[0,0,0,1.0]" \
+  --rotation1 45.0 \
+  --translation 1.0 \
+  --rotation2 -45.0
+
+# Read markers
+bellande_particle read-markers \
+  --particle-state "[0,0,0,1.0]" \
+  --world '{"width":10.0,"height":10.0,"markers":[[1.0,1.0]]}'
+
+# Create random particles
+bellande_particle create-random \
+  --count 10 \
+  --world '{"width":10.0,"height":10.0,"markers":[[1.0,1.0]]}'
 ```
 
-### Upgrade (if not upgraded)
+### Upgrade
 - `$ pip install --upgrade bellande_particle`
 
 ```
