@@ -1,23 +1,22 @@
 curl -X 'POST' \
-  'https://bellande-robotics-sensors-research-innovation-center.org/api/Bellande_Limit/bellande_particle' \
+  'https://bellande-robotics-sensors-research-innovation-center.org/api/Bellande_Particle/bellande_particle' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-    "node0": [0, 0, 0],
-    "node1": [100, 100, 100],
-    "environment": [1000, 1000, 1000],
-    "size": [10, 10, 10],
-    "goal": [200, 200, 200],
-    "obstacles": [
-      {
-        "position": [50, 50, 50],
-        "dimensions": [20, 20, 20]
-      }
-    ],
-    "search_radius": 50,
-    "sample_points": 20,
+    "particle": [0, 0, 0, 1.0],
+    "movement": {
+        "rotation1": 45.0,
+        "translation": 1.0,
+        "rotation2": -45.0
+    },
+    "world": {
+        "width": 10.0,
+        "height": 10.0,
+        "markers": [[1.0, 1.0]]
+    },
+    "count": 10,
     "auth": {
-      "authorization_key": "bellande_web_api_opensource"
+        "authorization_key": "bellande_web_api_opensource"
     }
   }'
 echo ""
