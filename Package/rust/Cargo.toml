@@ -1,6 +1,6 @@
 [package]
 name = "bellande_particle"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Bellande Robotics Sensors Research Innovation Center"]
 description = "A particle system using Bellande distributions for robust state estimation and localization"
