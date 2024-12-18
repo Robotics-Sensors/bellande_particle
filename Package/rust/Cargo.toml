@@ -1,0 +1,28 @@
+[package]
+name = "bellande_particle"
+version = "0.1.0"
+edition = "2021"
+authors = ["Bellande Robotics Sensors Research Innovation Center"]
+description = "A particle system using Bellande distributions for robust state estimation and localization"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/Robotics-Sensors/bellande_particle"
+documentation = "https://bellande-robotics-sensors-research-innovation-center.org/bellande_particle/docs"
+homepage = "https://bellande-robotics-sensors-research-innovation-center.org"
+readme = "README.md"
+keywords = ["robotics", "particle-filter", "state-estimation", "localization", "bellande"]
+categories = ["science::robotics", "algorithms", "mathematics", "simulation"]
+
+[dependencies]
+reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
+serde_json = "1.0"
+structopt = "0.3"
+tokio = { version = "1.0", features = ["full"] }
+
+[dev-dependencies]
+tokio-test = "0.4"
+mockito = "0.31"
+assert_approx_eq = "1.1"
+
+[lib]
+name = "bellande_particle"
+path = "src/bellande_particle.rs"
