@@ -5,7 +5,7 @@ with open("./README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="bellande_particle",
-    version="0.0.1",
+    version="0.0.2",
     description="Robotics Particle",
     long_description=long_description,
     long_description_content_type="text/markdown",
