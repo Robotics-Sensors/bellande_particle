@@ -67,7 +67,7 @@ struct Opt {
     cmd: Command,
 }
 
-async fn make_bellande_particle_move_request(
+pub async fn make_bellande_particle_move_request(
     particle_state: Value,
     rotation1: f64,
     translation: f64,
@@ -93,7 +93,7 @@ async fn make_bellande_particle_move_request(
     send_request(url, payload).await
 }
 
-async fn make_bellande_particle_read_markers_request(
+pub async fn make_bellande_particle_read_markers_request(
     particle_state: Value,
     world: Value,
 ) -> Result<Value, Box<dyn Error>> {
@@ -115,7 +115,7 @@ async fn make_bellande_particle_read_markers_request(
     send_request(url, payload).await
 }
 
-async fn make_bellande_particle_create_random_request(
+pub async fn make_bellande_particle_create_random_request(
     count: i32,
     world: Value,
 ) -> Result<Value, Box<dyn Error>> {
@@ -132,7 +132,7 @@ async fn make_bellande_particle_create_random_request(
     send_request(url, payload).await
 }
 
-async fn send_request(url: &str, payload: Value) -> Result<Value, Box<dyn Error>> {
+pub async fn send_request(url: &str, payload: Value) -> Result<Value, Box<dyn Error>> {
     let client = reqwest::Client::new();
 
     let response = client
@@ -146,44 +146,4 @@ async fn send_request(url: &str, payload: Value) -> Result<Value, Box<dyn Error>
         .await?;
 
     Ok(response)
-}
-
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
-    let opt = Opt::from_args();
-
-    let result = match opt.cmd {
-        Command::Move {
-            particle_state,
-            rotation1,
-            translation,
-            rotation2,
-        } => {
-            let particle_state: Value = serde_json::from_str(&particle_state)
-                .map_err(|e| format!("Error parsing particle state: {}", e))?;
-
-            make_bellande_particle_move_request(particle_state, rotation1, translation, rotation2)
-                .await?
-        }
-        Command::ReadMarkers {
-            particle_state,
-            world,
-        } => {
-            let particle_state: Value = serde_json::from_str(&particle_state)
-                .map_err(|e| format!("Error parsing particle state: {}", e))?;
-            let world: Value = serde_json::from_str(&world)
-                .map_err(|e| format!("Error parsing world info: {}", e))?;
-
-            make_bellande_particle_read_markers_request(particle_state, world).await?
-        }
-        Command::CreateRandom { count, world } => {
-            let world: Value = serde_json::from_str(&world)
-                .map_err(|e| format!("Error parsing world info: {}", e))?;
-
-            make_bellande_particle_create_random_request(count, world).await?
-        }
-    };
-
-    println!("{}", serde_json::to_string_pretty(&result)?);
-    Ok(())
 }
